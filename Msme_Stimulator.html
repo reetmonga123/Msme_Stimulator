@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Green MSME Growth & Financial Health Simulator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+:root {
+  --green-900: #1a2e1a;
+  --green-800: #1e3a1e;
+  --green-700: #2d5a2d;
+  --green-600: #3a7a3a;
+  --green-500: #4a9e4a;
+  --green-400: #6cbf6c;
+  --green-300: #95d695;
+  --green-100: #e8f5e8;
+  --green-50:  #f4fbf4;
+  --gold: #c9a84c;
+  --red-soft: #e05252;
+  --blue-soft: #4a7ec9;
+  --amber: #d4850a;
+  --text-dark: #1a2e1a;
+  --text-mid: #3d5c3d;
+  --text-light: #6b8a6b;
+  --text-muted: #9ab49a;
+  --bg-main: #f7faf7;
+  --bg-white: #ffffff;
+  --shadow-sm: 0 2px 8px rgba(30,58,30,0.08);
+  --shadow-md: 0 6px 24px rgba(30,58,30,0.12);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-lg: 24px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-main); color: var(--text-dark); line-height: 1.6; font-size: 15px; }
+
+/* HEADER */
+.site-header { background: var(--green-900); border-bottom: 2px solid var(--green-700); position: sticky; top: 0; z-index: 100; }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0.9rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+.logo-area { display: flex; align-items: center; gap: 0.75rem; }
+.logo-leaf { font-size: 1.8rem; }
+.site-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--green-300); font-weight: 700; line-height: 1.2; }
+.site-tagline { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; }
+.header-nav { display: flex; gap: 1.5rem; }
+.header-nav a { color: var(--green-300); text-decoration: none; font-size: 0.85rem; font-weight: 500; padding: 0.3rem 0; border-bottom: 2px solid transparent; transition: border-color 0.2s; }
+.header-nav a:hover { border-color: var(--green-400); }
+
+/* HERO */
+.hero { background: linear-gradient(135deg, var(--green-900) 0%, var(--green-800) 50%, #1a3328 100%); padding: 5rem 2rem 4rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; overflow: hidden; position: relative; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(74,158,74,0.12) 0%, transparent 70%); pointer-events: none; }
+.hero-content { max-width: 650px; position: relative; z-index: 2; padding-left: max(2rem, calc((100vw - 1200px) / 2)); }
+.hero-badge { display: inline-block; background: rgba(74,158,74,0.2); border: 1px solid var(--green-600); color: var(--green-300); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem; }
+.hero-headline { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem, 3.5vw, 2.6rem); color: #fff; line-height: 1.25; font-weight: 900; margin-bottom: 1.2rem; }
+.hero-sub { color: var(--green-300); font-size: 1rem; font-weight: 300; max-width: 520px; margin-bottom: 2.5rem; opacity: 0.9; }
+.hero-stats { display: flex; gap: 2rem; }
+.hstat { display: flex; flex-direction: column; }
+.hstat-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold); font-weight: 700; line-height: 1; }
+.hstat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.3rem; }
+.hero-illustration { position: relative; width: 220px; height: 220px; flex-shrink: 0; margin-right: max(2rem, calc((100vw - 1200px) / 2)); display: flex; align-items: center; justify-content: center; }
+.illus-circle { position: absolute; border-radius: 50%; border: 1.5px solid var(--green-600); opacity: 0.4; animation: pulse-ring 3s ease-in-out infinite; }
+.c1 { width: 200px; height: 200px; animation-delay: 0s; }
+.c2 { width: 145px; height: 145px; animation-delay: 0.8s; background: rgba(74,158,74,0.05); }
+.c3 { width: 90px; height: 90px; animation-delay: 1.6s; background: rgba(74,158,74,0.1); }
+@keyframes pulse-ring { 0%,100%{transform:scale(1);opacity:0.3} 50%{transform:scale(1.05);opacity:0.6} }
+.illus-icon { font-size: 2.5rem; position: relative; z-index: 2; }
+
+/* SECTIONS */
+.section { padding: 5rem 2rem; }
+.container { max-width: 1200px; margin: 0 auto; }
+.section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-600); margin-bottom: 0.5rem; }
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem; }
+.section-desc { color: var(--text-light); font-size: 0.95rem; margin-bottom: 2.5rem; }
+
+/* INPUTS */
+.inputs-section { background: var(--bg-white); }
+.input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+.input-card { background: var(--green-50); border: 1.5px solid var(--green-100); border-radius: var(--radius); padding: 1.4rem 1.5rem; transition: border-color 0.2s, box-shadow 0.2s; }
+.input-card:hover { border-color: var(--green-400); box-shadow: var(--shadow-sm); }
+.input-icon { font-size: 1.4rem; margin-bottom: 0.6rem; }
+.input-card label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 0.5rem; }
+.input-card input, .input-card select { width: 100%; background: var(--bg-white); border: 1.5px solid var(--green-300); border-radius: var(--radius-sm); padding: 0.7rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; color: var(--text-dark); outline: none; transition: border-color 0.2s; appearance: none; -webkit-appearance: none; }
+.input-card input:focus, .input-card select:focus { border-color: var(--green-500); box-shadow: 0 0 0 3px rgba(74,158,74,0.12); }
+.input-hint { display: block; margin-top: 0.4rem; font-size: 0.72rem; color: var(--text-muted); }
+.simulate-btn-wrap { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.btn-simulate { background: linear-gradient(135deg, var(--green-600), var(--green-500)); color: #fff; border: none; padding: 0.9rem 2.5rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; box-shadow: 0 4px 18px rgba(74,158,74,0.3); transition: transform 0.15s, box-shadow 0.15s; }
+.btn-simulate:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(74,158,74,0.4); }
+.btn-reset { background: transparent; border: 1.5px solid var(--green-400); color: var(--green-600); padding: 0.85rem 1.8rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+.btn-reset:hover { background: var(--green-100); }
+
+/* RESULTS */
+.results-section { background: var(--bg-main); }
+.module-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+.module-card { background: var(--bg-white); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-sm); border: 1.5px solid var(--green-100); }
+.full-card { margin-bottom: 1.5rem; }
+.module-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1.5px solid var(--green-100); }
+.module-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--green-100); line-height: 1; min-width: 2.5rem; }
+.module-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-500); margin-bottom: 0.2rem; }
+.module-card h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--text-dark); }
+.module-desc { color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+/* Profit */
+.profit-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px dashed var(--green-100); font-size: 0.9rem; }
+.profit-row:last-child { border-bottom: none; }
+.profit-total { margin-top: 0.5rem; padding-top: 0.8rem; border-top: 2px solid var(--green-300); font-weight: 700; font-size: 1rem; border-bottom: none; }
+.val-positive { color: var(--green-600); font-weight: 600; }
+.val-negative { color: var(--red-soft); font-weight: 600; }
+.val-net { font-size: 1.1rem; font-weight: 700; }
+.profit-bar-wrap { margin-top: 1.25rem; }
+.profit-bar-label { font-size: 0.72rem; color: var(--text-light); margin-bottom: 0.4rem; font-weight: 500; }
+.bar-track { height: 10px; background: var(--green-100); border-radius: 100px; overflow: hidden; }
+.bar-fill { height: 100%; background: linear-gradient(90deg, var(--green-400), var(--green-600)); border-radius: 100px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); width: 0%; }
+
+/* Sustainability */
+.sustain-comparison { display: flex; gap: 1rem; margin-bottom: 1.25rem; }
+.sustain-col { flex: 1; background: var(--green-50); border-radius: var(--radius-sm); padding: 1rem; text-align: center; border: 1.5px solid transparent; transition: border-color 0.3s; }
+.sustain-col-label { font-size: 0.75rem; font-weight: 600; color: var(--text-light); margin-bottom: 0.5rem; }
+.sustain-val { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--text-dark); }
+.selected-val { color: var(--green-700); font-size: 1.4rem; }
+.selected-col { border-color: var(--green-400); box-shadow: 0 4px 16px rgba(74,158,74,0.15); background: var(--green-100); }
+.sustain-sublabel { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.3rem; }
+.sustain-insight { background: var(--green-50); border-left: 3px solid var(--green-500); padding: 0.8rem 1rem; font-size: 0.85rem; color: var(--text-mid); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 0.75rem; }
+.sustain-boost { font-size: 0.82rem; font-weight: 600; color: var(--green-600); text-align: center; }
+
+/* Policy */
+.policy-scenarios { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
+.policy-scenario { border-radius: var(--radius-sm); padding: 1.1rem; text-align: center; border: 1.5px solid transparent; }
+.ps-rate { font-size: 1.6rem; font-family: 'Playfair Display', serif; font-weight: 900; margin-bottom: 0.25rem; }
+.ps-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.ps-impact { font-size: 0.82rem; color: var(--text-light); }
+.ps-icon { font-size: 1.3rem; display: block; margin-bottom: 0.4rem; }
+.ps-low { background: #eef8ee; border-color: var(--green-300); color: var(--green-800); }
+.ps-medium { background: #fdf8ec; border-color: #d4c06c; color: #5a4a00; }
+.ps-high { background: #fef0f0; border-color: #f0a0a0; color: #8a0000; }
+.ps-current { border-width: 2.5px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.policy-verdict { background: linear-gradient(135deg, var(--green-50), var(--green-100)); border-radius: var(--radius-sm); padding: 1rem 1.5rem; font-size: 0.9rem; color: var(--text-mid); font-weight: 500; border: 1px solid var(--green-100); }
+
+/* GDP */
+.gdp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.25rem; }
+.gdp-card { background: var(--green-50); border-radius: var(--radius); padding: 1.5rem; text-align: center; border: 1px solid var(--green-100); transition: transform 0.2s; }
+.gdp-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+.gdp-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.gdp-title { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.5rem; }
+.gdp-val { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--green-700); margin-bottom: 0.25rem; }
+.gdp-label { font-size: 0.72rem; color: var(--text-muted); }
+
+/* DASHBOARD */
+.dashboard-section { background: var(--green-900); }
+.dashboard-section .section-title { color: #fff; }
+.dashboard-section .section-desc { color: var(--green-300); }
+.dashboard-section .section-label { color: var(--gold); }
+.dashboard-grid { display: grid; grid-template-columns: 260px 1fr 1fr; gap: 1.5rem; align-items: start; }
+.dash-score-card { background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); padding: 2rem 1.5rem; text-align: center; }
+.score-ring-wrap { position: relative; width: 130px; height: 130px; margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center; }
+.score-ring { position: absolute; inset: 0; transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 10; }
+.ring-fill { fill: none; stroke: var(--green-400); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1); }
+.score-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+.score-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; color: #fff; line-height: 1; }
+.score-label { font-size: 0.72rem; color: var(--text-muted); }
+.score-title { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-300); margin-bottom: 0.4rem; }
+.score-grade { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+.dash-metrics { background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 1.75rem; display: flex; flex-direction: column; gap: 1.25rem; }
+.dm-label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green-300); margin-bottom: 0.5rem; }
+.dm-bar-wrap { height: 8px; background: rgba(255,255,255,0.08); border-radius: 100px; overflow: hidden; margin-bottom: 0.35rem; }
+.dm-bar { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--green-400), var(--green-600)); transition: width 0.8s cubic-bezier(0.4,0,0.2,1); width: 0%; }
+.green-bar { background: linear-gradient(90deg, #4aaf4a, #2d8a2d); }
+.blue-bar { background: linear-gradient(90deg, var(--blue-soft), #2a5ea0); }
+.amber-bar { background: linear-gradient(90deg, var(--gold), var(--amber)); }
+.dm-val { font-size: 0.82rem; font-weight: 600; color: #fff; }
+.dash-verdict { background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 1.75rem; }
+.verdict-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.verdict-text { font-size: 0.92rem; color: var(--green-100); line-height: 1.7; margin-bottom: 1rem; font-weight: 300; }
+.verdict-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.vtag { background: rgba(74,158,74,0.2); border: 1px solid var(--green-600); color: var(--green-300); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.25rem 0.7rem; border-radius: 100px; }
+
+/* CONCEPTS */
+.concepts-section { background: var(--bg-white); }
+.concepts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+.concept-card { background: var(--green-50); border-radius: var(--radius); padding: 1.75rem; border: 1.5px solid var(--green-100); transition: transform 0.2s, box-shadow 0.2s; }
+.concept-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.cc-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+.concept-card h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--green-800); margin-bottom: 0.5rem; }
+.concept-card p { font-size: 0.85rem; color: var(--text-light); line-height: 1.65; }
+
+/* FOOTER */
+.site-footer { background: var(--green-900); border-top: 1px solid var(--green-800); padding: 2rem; text-align: center; }
+.footer-inner p { color: var(--green-300); font-size: 0.85rem; margin-bottom: 0.3rem; }
+.footer-inner strong { color: #fff; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { flex-direction: column; padding: 3rem 1.5rem; }
+  .hero-content { padding-left: 0; }
+  .hero-illustration { display: none; }
+  .module-row { grid-template-columns: 1fr; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .dash-score-card { max-width: 260px; margin: 0 auto; }
+}
+@media (max-width: 600px) {
+  .hero-stats { flex-direction: column; gap: 1rem; }
+  .header-nav { display: none; }
+  .sustain-comparison { flex-direction: column; }
+  .input-grid { grid-template-columns: 1fr; }
+}
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <span class="logo-leaf">🌿</span>
+      <div>
+        <h1 class="site-title">Green MSME Simulator</h1>
+        <p class="site-tagline">India's Policy & Sustainability Impact Engine</p>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="#simulator">Simulator</a>
+      <a href="#policy">Policy</a>
+      <a href="#dashboard">Dashboard</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Undergraduate Data Science Project · Web Technology</div>
+    <h2 class="hero-headline">How do RBI Rates, Inflation &amp; Green Practices<br>Shape MSME Survival?</h2>
+    <p class="hero-sub">Enter your MSME data below and simulate real economic outcomes. Explore how monetary policy and sustainability drive—or destroy—micro business growth in India.</p>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-num">6.3 Cr+</span><span class="hstat-label">MSMEs in India</span></div>
+      <div class="hstat"><span class="hstat-num">30%</span><span class="hstat-label">of India's GDP</span></div>
+      <div class="hstat"><span class="hstat-num">11 Cr+</span><span class="hstat-label">Jobs Supported</span></div>
+    </div>
+  </div>
+  <div class="hero-illustration">
+    <div class="illus-circle c1"></div>
+    <div class="illus-circle c2"></div>
+    <div class="illus-circle c3"></div>
+    <span class="illus-icon">📊</span>
+  </div>
+</section>
+
+<!-- MODULE 1: INPUTS -->
+<section id="simulator" class="section inputs-section">
+  <div class="container">
+    <div class="section-label">Module 1</div>
+    <h2 class="section-title">MSME Input Parameters</h2>
+    <p class="section-desc">Configure your MSME's financial profile and macroeconomic environment</p>
+    <div class="input-grid">
+      <div class="input-card">
+        <div class="input-icon">💰</div>
+        <label for="investment">Total Investment (₹)</label>
+        <input type="number" id="investment" value="500000" min="0"/>
+        <span class="input-hint">Seed + operational capital</span>
+      </div>
+      <div class="input-card">
+        <div class="input-icon">📈</div>
+        <label for="revenue">Monthly Revenue (₹)</label>
+        <input type="number" id="revenue" value="80000" min="0"/>
+        <span class="input-hint">Average gross monthly income</span>
+      </div>
+      <div class="input-card">
+        <div class="input-icon">🏦</div>
+        <label for="rbi_rate">RBI Repo Rate (%)</label>
+        <input type="number" id="rbi_rate" value="6.5" step="0.1" min="0" max="30"/>
+        <span class="input-hint">Current RBI monetary policy rate</span>
+      </div>
+      <div class="input-card">
+        <div class="input-icon">📉</div>
+        <label for="inflation">Inflation Rate (%)</label>
+        <input type="number" id="inflation" value="5.5" step="0.1" min="0" max="30"/>
+        <span class="input-hint">Annual consumer price inflation</span>
+      </div>
+      <div class="input-card">
+        <div class="input-icon">🌱</div>
+        <label for="cost_pct">Cost of Production (% of Revenue)</label>
+        <input type="number" id="cost_pct" value="60" step="1" min="0" max="100"/>
+        <span class="input-hint">What % of revenue goes to costs?</span>
+      </div>
+      <div class="input-card">
+        <div class="input-icon">♻️</div>
+        <label for="sustainability">Sustainability Adoption Level</label>
+        <select id="sustainability">
+          <option value="low">Low — Traditional, no eco-practices</option>
+          <option value="medium" selected>Medium — Some green initiatives</option>
+          <option value="high">High — Fully eco-certified MSME</option>
+        </select>
+        <span class="input-hint">Green adoption affects long-term costs</span>
+      </div>
+    </div>
+    <div class="simulate-btn-wrap">
+      <button class="btn-simulate" onclick="runSimulation()">▶ Run Full Simulation</button>
+      <button class="btn-reset" onclick="resetAll()">↺ Reset</button>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section results-section" id="results-section">
+  <div class="container">
+
+    <div class="module-row">
+      <!-- MODULE 2: PROFIT -->
+      <div class="module-card" id="profit-module">
+        <div class="module-header">
+          <span class="module-num">02</span>
+          <div>
+            <div class="module-tag">Profit Analysis</div>
+            <h3>MSME Profit Simulator</h3>
+          </div>
+        </div>
+        <div class="profit-row"><span>Annual Revenue</span><span id="pr-annual-rev" class="val-positive">—</span></div>
+        <div class="profit-row"><span>Cost of Production</span><span id="pr-cost" class="val-negative">—</span></div>
+        <div class="profit-row"><span>Loan Interest Cost (RBI rate)</span><span id="pr-interest" class="val-negative">—</span></div>
+        <div class="profit-row"><span>Inflation Erosion</span><span id="pr-inflation" class="val-negative">—</span></div>
+        <div class="profit-row profit-total"><span>Net Adjusted Profit</span><span id="pr-net" class="val-net">—</span></div>
+        <div class="profit-row"><span>Profit Margin</span><span id="pr-margin">—</span></div>
+        <div class="profit-bar-wrap">
+          <div class="profit-bar-label">Profit health</div>
+          <div class="bar-track"><div class="bar-fill" id="profit-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <!-- MODULE 3: SUSTAINABILITY -->
+      <div class="module-card" id="sustain-module">
+        <div class="module-header">
+          <span class="module-num">03</span>
+          <div>
+            <div class="module-tag">Sustainability Impact</div>
+            <h3>Green Growth Effect</h3>
+          </div>
+        </div>
+        <div class="sustain-comparison">
+          <div class="sustain-col">
+            <div class="sustain-col-label">🏭 Non-Green</div>
+            <div class="sustain-val" id="s-low-profit">—</div>
+            <div class="sustain-sublabel">5-yr cumulative</div>
+          </div>
+          <div class="sustain-col selected-col">
+            <div class="sustain-col-label" id="sustain-selected-label">🌿 Your MSME</div>
+            <div class="sustain-val selected-val" id="s-selected-profit">—</div>
+            <div class="sustain-sublabel">5-yr cumulative</div>
+          </div>
+          <div class="sustain-col">
+            <div class="sustain-col-label">🌍 Fully Green</div>
+            <div class="sustain-val" id="s-high-profit">—</div>
+            <div class="sustain-sublabel">5-yr cumulative</div>
+          </div>
+        </div>
+        <div class="sustain-insight" id="sustain-insight">Run simulation to see insights.</div>
+        <div class="sustain-boost" id="sustain-boost"></div>
+      </div>
+    </div>
+
+    <!-- MODULE 4: POLICY -->
+    <div class="module-card full-card" id="policy">
+      <div class="module-header">
+        <span class="module-num">04</span>
+        <div>
+          <div class="module-tag">RBI Monetary Policy</div>
+          <h3>Policy Impact Analyzer</h3>
+        </div>
+      </div>
+      <p class="module-desc">How does changing the RBI Repo Rate affect MSME expansion potential?</p>
+      <div class="policy-scenarios" id="policy-scenarios"></div>
+      <div class="policy-verdict" id="policy-verdict"></div>
+    </div>
+
+    <!-- MODULE 5: GDP -->
+    <div class="module-card full-card">
+      <div class="module-header">
+        <span class="module-num">05</span>
+        <div>
+          <div class="module-tag">Macroeconomic Lens</div>
+          <h3>MSME Contribution to Economy</h3>
+        </div>
+      </div>
+      <div class="gdp-grid">
+        <div class="gdp-card">
+          <div class="gdp-icon">🏗️</div>
+          <div class="gdp-title">Employment Generation</div>
+          <div class="gdp-val" id="gdp-employment">—</div>
+          <div class="gdp-label">Estimated workers supported</div>
+        </div>
+        <div class="gdp-card">
+          <div class="gdp-icon">📦</div>
+          <div class="gdp-title">GDP Contribution Tier</div>
+          <div class="gdp-val" id="gdp-tier">—</div>
+          <div class="gdp-label">Based on investment &amp; revenue</div>
+        </div>
+        <div class="gdp-card">
+          <div class="gdp-icon">🔄</div>
+          <div class="gdp-title">Value Chain Position</div>
+          <div class="gdp-val" id="gdp-chain">—</div>
+          <div class="gdp-label">Micro / Small / Medium</div>
+        </div>
+        <div class="gdp-card">
+          <div class="gdp-icon">🌐</div>
+          <div class="gdp-title">Export Potential</div>
+          <div class="gdp-val" id="gdp-export">—</div>
+          <div class="gdp-label">Based on margins &amp; sustainability</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODULE 6: DASHBOARD -->
+<section class="section dashboard-section" id="dashboard">
+  <div class="container">
+    <div class="section-label">Final Module</div>
+    <h2 class="section-title">MSME Financial Health Dashboard</h2>
+    <p class="section-desc">Your MSME's comprehensive performance scorecard</p>
+    <div class="dashboard-grid">
+
+      <div class="dash-score-card">
+        <div class="score-ring-wrap">
+          <svg class="score-ring" viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="50"/>
+            <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="50"
+              stroke-dasharray="314" stroke-dashoffset="314"/>
+          </svg>
+          <div class="score-inner">
+            <span class="score-num" id="health-score-num">—</span>
+            <span class="score-label">/ 100</span>
+          </div>
+        </div>
+        <div class="score-title">Financial Health Score</div>
+        <div class="score-grade" id="score-grade">—</div>
+      </div>
+
+      <div class="dash-metrics">
+        <div class="dash-metric-row">
+          <div class="dm-label">Growth Potential</div>
+          <div class="dm-bar-wrap"><div class="dm-bar" id="growth-bar"></div></div>
+          <div class="dm-val" id="growth-val">—</div>
+        </div>
+        <div class="dash-metric-row">
+          <div class="dm-label">Sustainability Rating</div>
+          <div class="dm-bar-wrap"><div class="dm-bar green-bar" id="sustain-bar"></div></div>
+          <div class="dm-val" id="sustain-val">—</div>
+        </div>
+        <div class="dash-metric-row">
+          <div class="dm-label">Policy Resilience</div>
+          <div class="dm-bar-wrap"><div class="dm-bar blue-bar" id="policy-bar"></div></div>
+          <div class="dm-val" id="policy-val">—</div>
+        </div>
+        <div class="dash-metric-row">
+          <div class="dm-label">Inflation Immunity</div>
+          <div class="dm-bar-wrap"><div class="dm-bar amber-bar" id="inflation-bar"></div></div>
+          <div class="dm-val" id="inflation-val">—</div>
+        </div>
+      </div>
+
+      <div class="dash-verdict">
+        <div class="verdict-icon" id="verdict-icon">🔄</div>
+        <div class="verdict-text" id="verdict-text">Run the simulation to see your MSME's health assessment and policy recommendations.</div>
+        <div class="verdict-tags" id="verdict-tags"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTS -->
+<section class="section concepts-section">
+  <div class="container">
+    <h2 class="section-title">Economic Concepts Behind This Simulator</h2>
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <div class="cc-icon">🏦</div>
+        <h4>RBI Monetary Policy</h4>
+        <p>The RBI repo rate is the rate at which commercial banks borrow from RBI. Higher rates → costlier loans → MSME credit constraint → slower expansion.</p>
+      </div>
+      <div class="concept-card">
+        <div class="cc-icon">📉</div>
+        <h4>Inflation Impact</h4>
+        <p>Rising inflation erodes real profits. MSMEs with fixed contracts face cost-price squeezes when input costs rise faster than output prices, reducing viability.</p>
+      </div>
+      <div class="concept-card">
+        <div class="cc-icon">🌱</div>
+        <h4>Green Economics</h4>
+        <p>Sustainability adoption reduces long-run costs via energy efficiency, attracts ESG-aligned credit, and aligns with India's Net Zero 2070 national goals for MSMEs.</p>
+      </div>
+      <div class="concept-card">
+        <div class="cc-icon">📊</div>
+        <h4>MSME & GDP</h4>
+        <p>MSMEs contribute ~30% to India's GDP, employ 11 crore workers, and form 48% of exports. Their financial health is a direct macroeconomic indicator for national growth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>🌿 <strong>Green MSME Growth & Financial Health Simulator</strong></p>
+    <p>Web Technology Project · Department of Data Science</p>
+    <p style="color:#6b8a6b;font-size:0.8rem;margin-top:0.5rem;">Powered by HTML · CSS · JavaScript · Economic Modeling</p>
+  </div>
+</footer>
+
+<script>
+// ============================================
+//  SIMULATION ENGINE
+// ============================================
+
+const SUSTAIN_CONFIG = {
+  low:    { costMult: 1.08, growthBonus: 0.00, label: "🏭 Non-Green (Low)" },
+  medium: { costMult: 1.00, growthBonus: 0.04, label: "🌿 Semi-Green (Medium)" },
+  high:   { costMult: 0.90, growthBonus: 0.09, label: "🌍 Fully Green (High)" },
+};
+
+function fmt(n) {
+  if (isNaN(n)) return "—";
+  const abs = Math.abs(n);
+  const sign = n < 0 ? "-" : "";
+  if (abs >= 1e7) return sign + "₹" + (abs / 1e7).toFixed(2) + " Cr";
+  if (abs >= 1e5) return sign + "₹" + (abs / 1e5).toFixed(2) + " L";
+  return sign + "₹" + abs.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+}
+
+function pct(n) { return isNaN(n) ? "—" : n.toFixed(1) + "%"; }
+function clamp(v, mn, mx) { return Math.min(Math.max(v, mn), mx); }
+
+function animateBar(id, w, delay) {
+  setTimeout(function() {
+    var el = document.getElementById(id);
+    if (el) el.style.width = clamp(w, 0, 100) + "%";
+  }, delay || 0);
+}
+
+function runSimulation() {
+  var investment = parseFloat(document.getElementById("investment").value) || 0;
+  var revenue    = parseFloat(document.getElementById("revenue").value)    || 0;
+  var rbiRate    = parseFloat(document.getElementById("rbi_rate").value)   || 0;
+  var inflation  = parseFloat(document.getElementById("inflation").value)  || 0;
+  var costPct    = parseFloat(document.getElementById("cost_pct").value)   || 0;
+  var sustain    = document.getElementById("sustainability").value;
+
+  var annualRevenue   = revenue * 12;
+  var sCfg            = SUSTAIN_CONFIG[sustain];
+  var adjCostPct      = costPct * sCfg.costMult;
+  var productionCost  = annualRevenue * (adjCostPct / 100);
+  var loanAmount      = investment * 0.40;
+  var interestCost    = loanAmount * (rbiRate / 100);
+  var grossProfit     = annualRevenue - productionCost;
+  var inflationErosion = grossProfit * (inflation / 100) * 0.5;
+  var netProfit       = grossProfit - interestCost - inflationErosion;
+  var profitMargin    = annualRevenue > 0 ? (netProfit / annualRevenue) * 100 : 0;
+
+  // --- Module 2: Profit ---
+  document.getElementById("pr-annual-rev").textContent = fmt(annualRevenue);
+  document.getElementById("pr-cost").textContent = "−" + fmt(productionCost);
+  document.getElementById("pr-interest").textContent = "−" + fmt(interestCost);
+  document.getElementById("pr-inflation").textContent = "−" + fmt(inflationErosion);
+  var netEl = document.getElementById("pr-net");
+  netEl.textContent = fmt(netProfit);
+  netEl.style.color = netProfit >= 0 ? "#3a7a3a" : "#e05252";
+  var marginEl = document.getElementById("pr-margin");
+  marginEl.textContent = pct(profitMargin);
+  marginEl.style.color = profitMargin >= 15 ? "#3a7a3a" : profitMargin >= 5 ? "#d4850a" : "#e05252";
+  animateBar("profit-bar-fill", clamp((profitMargin / 30) * 100, 0, 100), 100);
+
+  // --- Module 3: Sustainability 5-year ---
+  function fiveYear(level) {
+    var cfg = SUSTAIN_CONFIG[level];
+    var ac = costPct * cfg.costMult;
+    var gp = annualRevenue * (1 - ac / 100);
+    var ie = gp * (inflation / 100) * 0.5;
+    var an = gp - interestCost - ie;
+    var total = 0;
+    for (var yr = 1; yr <= 5; yr++) total += an * Math.pow(1 + cfg.growthBonus, yr);
+    return total;
+  }
+  var lowFive      = fiveYear("low");
+  var highFive     = fiveYear("high");
+  var selectedFive = fiveYear(sustain);
+
+  var lowEl = document.getElementById("s-low-profit");
+  lowEl.textContent = fmt(lowFive);
+  lowEl.style.color = lowFive >= 0 ? "#1a2e1a" : "#e05252";
+  document.getElementById("s-high-profit").textContent = fmt(highFive);
+  document.getElementById("s-selected-profit").textContent = fmt(selectedFive);
+  document.getElementById("sustain-selected-label").textContent = sCfg.label;
+
+  var insightMap = {
+    low:    "⚠️ Non-green MSMEs face 8% higher cost burden. Over 5 years, rising input costs and energy bills compound losses. Transitioning to green practices is strongly advisable.",
+    medium: "🌿 Semi-green adoption provides a 4% annual growth advantage through modest energy savings and better credit access. Consider upgrading to full green certification.",
+    high:   "🌍 Fully sustainable MSMEs enjoy a 9% annual growth edge via energy cost cuts, ESG credit incentives, and government MSME green subsidies under India's Net Zero 2070 agenda."
+  };
+  document.getElementById("sustain-insight").textContent = insightMap[sustain];
+
+  if (sustain !== "low" && lowFive !== 0) {
+    var boostPct = ((selectedFive - lowFive) / Math.abs(lowFive)) * 100;
+    document.getElementById("sustain-boost").textContent =
+      "📊 Green advantage over non-green MSME: " + (boostPct > 0 ? "+" : "") + boostPct.toFixed(1) + "% over 5 years";
+  } else {
+    document.getElementById("sustain-boost").textContent = "";
+  }
+
+  // --- Module 4: Policy ---
+  var scenarios = [
+    { rate: 4.0,  label: "Accommodative", cls: "ps-low",    icon: "🚀", impact: "Strong credit flow. MSMEs expand rapidly. Low EMI burden drives investment." },
+    { rate: 6.5,  label: "Neutral",        cls: "ps-medium", icon: "⚖️", impact: "Balanced growth. Moderate borrowing costs. Stable MSME survival environment." },
+    { rate: 9.0,  label: "Tight",          cls: "ps-high",   icon: "🛑", impact: "Credit squeeze. Higher EMIs reduce MSME expansion. Survival under pressure." }
+  ];
+  var psEl = document.getElementById("policy-scenarios");
+  psEl.innerHTML = "";
+  scenarios.forEach(function(sc) {
+    var isCurrent = Math.abs(sc.rate - rbiRate) < 1.5;
+    var d = document.createElement("div");
+    d.className = "policy-scenario " + sc.cls + (isCurrent ? " ps-current" : "");
+    d.innerHTML = '<span class="ps-icon">' + sc.icon + '</span>'
+      + '<div class="ps-rate">' + sc.rate + '%</div>'
+      + '<div class="ps-label">' + sc.label + (isCurrent ? " ← You" : "") + '</div>'
+      + '<div class="ps-impact">' + sc.impact + '</div>';
+    psEl.appendChild(d);
+  });
+  document.getElementById("policy-verdict").innerHTML = rbiRate <= 5
+    ? "✅ RBI rate of " + rbiRate + "% is <strong>accommodative</strong>. Low-cost credit enables expansion, hiring, and tech investment for your MSME."
+    : rbiRate <= 7.5
+    ? "⚖️ RBI rate of " + rbiRate + "% is <strong>neutral</strong>. Borrowing is manageable. Focus on cost efficiency to protect margins."
+    : "⚠️ RBI rate of " + rbiRate + "% is <strong>tight</strong>. High interest compresses margins. Reduce debt dependency and improve self-financing.";
+
+  // --- Module 5: GDP ---
+  var emp = Math.round((investment / 100000) * 0.5 + (annualRevenue / 200000));
+  document.getElementById("gdp-employment").textContent = "~" + emp + " workers";
+  var tier, chain;
+  if (investment < 100000)      { tier = "Micro (Low)";           chain = "Micro Enterprise"; }
+  else if (investment < 1000000){ tier = "Small (Medium)";        chain = "Small Enterprise"; }
+  else if (investment < 5000000){ tier = "Medium (High)";         chain = "Medium Enterprise"; }
+  else                           { tier = "Large MSME (Very High)"; chain = "Upper Medium"; }
+  document.getElementById("gdp-tier").textContent  = tier;
+  document.getElementById("gdp-chain").textContent = chain;
+  document.getElementById("gdp-export").textContent = (profitMargin > 15 && sustain !== "low") ? "High Potential"
+    : profitMargin > 5 ? "Moderate" : "Limited";
+
+  // --- Module 6: Dashboard ---
+  var profitScore  = clamp((profitMargin / 25) * 35, 0, 35);
+  var sustainScore = { low: 0, medium: 15, high: 25 }[sustain];
+  var policyScore  = clamp(((10 - rbiRate) / 10) * 20, 0, 20);
+  var inflScore    = clamp(((15 - inflation) / 15) * 20, 0, 20);
+  var healthScore  = Math.round(profitScore + sustainScore + policyScore + inflScore);
+
+  document.getElementById("health-score-num").textContent = healthScore;
+  var offset = 314 - (314 * healthScore / 100);
+  setTimeout(function() {
+    var ring = document.getElementById("ring-fill");
+    if (ring) {
+      ring.style.strokeDashoffset = offset;
+      ring.style.stroke = healthScore >= 70 ? "#6cbf6c" : healthScore >= 45 ? "#c9a84c" : "#e05252";
+    }
+  }, 200);
+
+  document.getElementById("score-grade").textContent =
+    healthScore >= 80 ? "Excellent 🌟" :
+    healthScore >= 65 ? "Good ✅" :
+    healthScore >= 50 ? "Moderate ⚖️" :
+    healthScore >= 35 ? "Weak ⚠️" : "Critical 🚨";
+
+  animateBar("growth-bar",   clamp((profitMargin / 30) * 100, 0, 100), 300);
+  animateBar("sustain-bar",  { low: 20, medium: 55, high: 90 }[sustain], 450);
+  animateBar("policy-bar",   clamp(((10 - rbiRate) / 10) * 100, 0, 100), 600);
+  animateBar("inflation-bar",clamp(((20 - inflation) / 20) * 100, 0, 100), 750);
+
+  document.getElementById("growth-val").textContent   = profitMargin >= 0 ? pct(profitMargin) + " margin" : "Negative";
+  document.getElementById("sustain-val").textContent  = { low: "Low — 2/10", medium: "Medium — 6/10", high: "High — 9/10" }[sustain];
+  document.getElementById("policy-val").textContent   = rbiRate <= 5 ? "Favourable" : rbiRate <= 7.5 ? "Neutral" : "Restrictive";
+  document.getElementById("inflation-val").textContent = inflation <= 4 ? "Low risk" : inflation <= 7 ? "Moderate" : "High risk";
+
+  var icon, msg, tags;
+  if (healthScore >= 70) {
+    icon = "🌿";
+    msg  = "Your MSME is financially robust. With a " + pct(profitMargin) + " profit margin and " + sustain + " sustainability adoption, you are well-positioned for long-term growth. Continue investing in green practices to unlock government subsidies and ESG credit lines.";
+    tags = ["Profitable", "Growth Ready", "Low Risk", "Recommended: Scale Up"];
+  } else if (healthScore >= 50) {
+    icon = "⚖️";
+    msg  = "Your MSME is moderately healthy. Review your cost structure — production costs and RBI-linked interest are the primary pressure points. Upgrading sustainability practices will provide a competitive edge.";
+    tags = ["Stable", "Cost Pressure", "Monitor Closely", "Recommended: Optimise"];
+  } else if (healthScore >= 35) {
+    icon = "⚠️";
+    msg  = "Your MSME is under financial stress. Inflation erosion (" + pct(inflation) + ") and high borrowing costs (" + pct(rbiRate) + " repo) are compressing margins. Immediate cost restructuring and green adoption for subsidy access are advised.";
+    tags = ["Stressed", "High Interest Risk", "Action Needed", "Recommended: Restructure"];
+  } else {
+    icon = "🚨";
+    msg  = "Critical financial health. At current rates and cost structures, your MSME faces viability risk. Seek RBI MSME Emergency Credit Line (ECLGS), reduce production costs, and urgently adopt sustainability for subsidy relief.";
+    tags = ["Critical", "Survival Risk", "Immediate Action", "Seek ECLGS Support"];
+  }
+  document.getElementById("verdict-icon").textContent = icon;
+  document.getElementById("verdict-text").textContent = msg;
+  document.getElementById("verdict-tags").innerHTML = tags.map(function(t) {
+    return '<span class="vtag">' + t + '</span>';
+  }).join("");
+
+  document.getElementById("results-section").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function resetAll() {
+  document.getElementById("investment").value = "500000";
+  document.getElementById("revenue").value    = "80000";
+  document.getElementById("rbi_rate").value   = "6.5";
+  document.getElementById("inflation").value  = "5.5";
+  document.getElementById("cost_pct").value   = "60";
+  document.getElementById("sustainability").value = "medium";
+
+  ["pr-annual-rev","pr-cost","pr-interest","pr-inflation","pr-net","pr-margin",
+   "s-low-profit","s-selected-profit","s-high-profit",
+   "gdp-employment","gdp-tier","gdp-chain","gdp-export",
+   "health-score-num","score-grade","growth-val","sustain-val","policy-val","inflation-val"
+  ].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) { el.textContent = "—"; el.style.color = ""; }
+  });
+
+  document.getElementById("sustain-insight").textContent = "Run simulation to see insights.";
+  document.getElementById("sustain-boost").textContent   = "";
+  document.getElementById("policy-scenarios").innerHTML  = "";
+  document.getElementById("policy-verdict").innerHTML    = "";
+  document.getElementById("verdict-icon").textContent    = "🔄";
+  document.getElementById("verdict-text").textContent    = "Run the simulation to see your MSME's health assessment and policy recommendations.";
+  document.getElementById("verdict-tags").innerHTML      = "";
+
+  ["profit-bar-fill","growth-bar","sustain-bar","policy-bar","inflation-bar"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.width = "0%";
+  });
+
+  var ring = document.getElementById("ring-fill");
+  if (ring) { ring.style.strokeDashoffset = "314"; ring.style.stroke = "#6cbf6c"; }
+}
+
+window.addEventListener("DOMContentLoaded", function() {
+  setTimeout(runSimulation, 300);
+});
+</script>
+</body>
+</html>
